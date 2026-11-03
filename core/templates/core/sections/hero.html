@@ -1,0 +1,60 @@
+{% if hero.is_active %}
+<section class="hero" id="home">
+
+  <div class="hero-bg-wrap">
+    <div class="hero-bg" {% if hero.background_image %}style="background-image:url('{{ hero.background_image.url }}')"{% endif %}></div>
+    <div class="hero-overlay"></div>
+    <span class="shape shape-1"></span>
+    <span class="shape shape-2"></span>
+    <span class="shape shape-3"></span>
+    <span class="shape shape-4"></span>
+    <span class="shape shape-5"></span>
+  </div>
+
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <span class="hero-tag anim a1">{{ hero.tagline }}</span>
+
+      <h1 class="hero-title anim a2">
+        {{ hero.heading_line1 }}<br>
+        {{ hero.heading_line2 }} <span class="highlight">{{ hero.heading_highlight }}</span>
+      </h1>
+
+      <div class="hero-line anim a3"></div>
+      <p class="hero-desc anim a3">{{ hero.description }}</p>
+
+      <div class="hero-btns anim a4">
+        <a href="{{ hero.primary_btn_url }}" class="btn btn-primary">{{ hero.primary_btn_text }} <i class="bi bi-arrow-right"></i></a>
+        <a href="{{ hero.secondary_btn_url }}" class="btn btn-outline">{{ hero.secondary_btn_text }} <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      {% if hero.show_warranty %}
+      <div class="warranty anim a5">
+        <span class="warranty-icon"><i class="{{ hero.warranty_icon_class }}"></i></span>
+        <div>
+          <h4>{{ hero.warranty_title }}</h4>
+          <small>{{ hero.warranty_subtitle }}</small>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if hero_features %}
+  <div class="hero-features-wrap">
+    <div class="hero-features anim a6">
+      {% for f in hero_features %}
+      <div class="hero-feature">
+        <span class="feature-icon {{ f.icon_color }}"><i class="{{ f.icon_class }}"></i></span>
+        <div>
+          <h5>{{ f.title }}</h5>
+          <p>{{ f.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</section>
+{% endif %}

@@ -1,0 +1,31 @@
+:root {
+  --purple: #6C0994;
+  --orange: #F97316;
+  --cream:  #F4ECDE;
+  --dark:   #180221;
+
+  --font-heading: 'Poppins', sans-serif;
+  --font-text: 'Manrope', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-text);
+  background: var(--cream);
+  color: var(--dark);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.container { width: min(1200px, 92%); margin-inline: auto; }
+
+/* scroll animation helper (JS la trigger pannuvom) */
+.reveal { opacity: 0; transform: translateY(40px); transition: all .8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }

@@ -1,0 +1,23 @@
+{% if setup.is_active %}
+<section class="stp" id="setup">
+  <div class="stp-inner">
+
+    <span class="stp-eyebrow reveal">{{ setup.eyebrow_text }}</span>
+    <h2 class="stp-title reveal d1">{{ setup.heading }}</h2>
+    <p class="stp-desc reveal d2">{{ setup.description }}</p>
+
+    {% if setup.image %}
+    <div class="stp-image reveal reveal-zoom d3">
+      <img src="{{ setup.image.url }}" alt="{{ setup.heading }}">
+    </div>
+    {% endif %}
+
+    <ul class="stp-tags">
+      {% for t in setup_tags %}
+      <li class="stp-tag reveal" style="transition-delay: {% widthratio forloop.counter 1 70 %}ms">{{ t.label }}</li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
+{% endif %}

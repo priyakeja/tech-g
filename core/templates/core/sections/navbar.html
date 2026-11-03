@@ -1,0 +1,28 @@
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+
+    <a href="{% url 'index' %}" class="logo">
+      {% if site.logo_image %}
+        <img src="{{ site.logo_image.url }}" alt="{{ site.logo_text }}" class="logo-img">
+      {% else %}
+        <span class="logo-icon"><i class="{{ site.logo_icon_class }}"></i></span>
+      {% endif %}
+      <span class="logo-text">{{ site.logo_text }} <span>{{ site.logo_highlight }}</span></span>
+    </a>
+
+    <nav class="nav-menu" id="navMenu">
+      <ul>
+        {% for link in nav_links %}
+          <li><a href="{{ link.url }}" class="nav-link">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <a href="{{ site.contact_btn_url }}" class="btn-contact btn-contact-mobile">{{ site.contact_btn_text }}</a>
+    </nav>
+
+    <a href="{{ site.contact_btn_url }}" class="btn-contact btn-contact-desktop">{{ site.contact_btn_text }}</a>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

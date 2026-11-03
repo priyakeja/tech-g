@@ -1,0 +1,30 @@
+{% if cta.is_active %}
+<section class="cta" id="cta">
+  <div class="cta-card reveal reveal-zoom">
+
+    {% if cta.background_image %}
+      <img class="cta-bg" src="{{ cta.background_image.url }}" alt="">
+    {% endif %}
+    <span class="cta-shade"></span>
+
+    <div class="cta-content">
+      <span class="cta-eyebrow reveal d1">{{ cta.eyebrow_text }}</span>
+
+      <h2 class="cta-title reveal d2">
+        {{ cta.heading_normal }} <em>{{ cta.heading_highlight }}</em><b class="dot">{{ cta.heading_dot }}</b>
+      </h2>
+
+      <p class="cta-desc reveal d3">{{ cta.description }}</p>
+
+      <div class="cta-actions reveal d4">
+        <a class="cta-btn" href="{{ cta.button_url }}">
+          <span>{{ cta.button_text }}</span>
+          {% if cta.button_icon %}<i class="{{ cta.button_icon }}"></i>{% endif %}
+        </a>
+        {% if cta.tagline %}<span class="cta-tagline">{{ cta.tagline }}</span>{% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endif %}

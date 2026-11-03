@@ -1,0 +1,41 @@
+{% if service.is_active %}
+<section class="svc" id="services">
+  <div class="svc-wrap">
+
+    <div class="svc-image reveal">
+      {% if service.image %}
+        <img src="{{ service.image.url }}" alt="{{ service.badge_text }}">
+      {% endif %}
+      {% if service.badge_text %}
+        <span class="svc-badge">{{ service.badge_text }}</span>
+      {% endif %}
+    </div>
+
+    <div class="svc-bottom">
+
+      <div class="svc-card-wrap reveal reveal-left">
+        <div class="svc-card">
+          <h2>{{ service.heading_normal }} <em>{{ service.heading_highlight }}</em></h2>
+          <p>{{ service.description }}</p>
+          <a href="{{ service.button_url }}" class="svc-btn">
+            {{ service.button_text }} <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="svc-items">
+        {% for item in service_items %}
+        <div class="svc-item reveal" style="transition-delay: {% widthratio forloop.counter0 1 120 %}ms">
+          <span class="svc-icon {{ item.icon_color }}"><i class="{{ item.icon_class }}"></i></span>
+          <div>
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.description }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}

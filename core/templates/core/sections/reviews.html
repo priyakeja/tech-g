@@ -1,0 +1,99 @@
+{% if rv.is_active %}
+<section class="rv" id="reviews" data-per-page="{{ rv.reviews_per_page }}" data-autoplay="{{ rv.autoplay_seconds }}"
+         style="--per: {{ rv.reviews_per_page }}">
+  <span class="rv-deco rv-deco-1"></span>
+  <span class="rv-deco rv-deco-2"></span>
+  <span class="rv-deco rv-deco-3"></span>
+  <span class="rv-deco rv-deco-4"></span>
+
+  <div class="rv-stage">
+
+    <div class="rv-head">
+      <span class="rv-badge reveal">{{ rv.badge_text }}</span>
+      <h2 class="rv-title reveal d1">{{ rv.heading_normal }} <em>{{ rv.heading_highlight }}</em> {{ rv.heading_end }}</h2>
+      {% if rv.subtitle %}<p class="rv-sub reveal d2">{{ rv.subtitle }}</p>{% endif %}
+    </div>
+
+    <!-- LEFT: reviews slider -->
+    <div class="rv-list-col">
+      <div class="rv-list reveal d2" id="rvList">
+        {% for r in reviews %}
+        <article class="rv-card">
+          <span class="rv-avatar {{ r.avatar_color }}">{{ r.name|slice:":1"|upper }}</span>
+          <div class="rv-meta">
+            <h4>{{ r.name }}</h4>
+            {% if r.city %}<small>{{ r.city }}</small>{% endif %}
+          </div>
+          <div class="rv-stars" role="img" aria-label="{{ r.rating }} out of 5 stars">
+            {% for i in "12345" %}<i class="bi {% if forloop.counter <= r.rating %}bi-star-fill{% else %}bi-star{% endif %}" style="--s: {{ forloop.counter0 }}"></i>{% endfor %}
+          </div>
+          <p class="rv-text">{{ r.text }}</p>
+        </article>
+        {% empty %}
+        <p class="rv-empty">No reviews yet. Be the first to write one!</p>
+        {% endfor %}
+      </div>
+
+      <div class="rv-controls" id="rvControls">
+        <button type="button" class="rv-nav" id="rvPrev" aria-label="Previous reviews"><i class="bi bi-chevron-left"></i></button>
+        <div class="rv-dots" id="rvDots"></div>
+        <button type="button" class="rv-nav" id="rvNext" aria-label="Next reviews"><i class="bi bi-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- RIGHT: write a review -->
+    <div class="rv-form-col reveal reveal-right d3">
+      <form class="rv-form" id="rvForm" method="post" action="{% url 'submit_review' %}" novalidate>
+        {% csrf_token %}
+
+        <div class="rv-form-head">
+          <span class="rv-form-icon"><i class="{{ rv.form_icon }}"></i></span>
+          <div>
+            <h3>{{ rv.form_title }}</h3>
+            <p>{{ rv.form_subtitle }}</p>
+          </div>
+        </div>
+
+        <div class="rv-field" data-field="name">
+          <label for="rvName">{{ rv.name_label }} <b>*</b></label>
+          <input id="rvName" name="name" type="text" maxlength="80" placeholder="{{ rv.name_placeholder }}" autocomplete="name">
+          <small class="rv-err"></small>
+        </div>
+
+        <div class="rv-field" data-field="rating">
+          <span class="rv-label">{{ rv.rating_label }} <b>*</b></span>
+          <div class="rv-rate">
+            {% for n in "54321" %}
+            <input type="radio" name="rating" id="rvStar{{ n }}" value="{{ n }}">
+            <label for="rvStar{{ n }}" title="{{ n }} star"><i class="bi bi-star"></i><i class="bi bi-star-fill"></i></label>
+            {% endfor %}
+          </div>
+          <small class="rv-err"></small>
+        </div>
+
+        <div class="rv-field" data-field="text">
+          <label for="rvText">{{ rv.review_label }} <b>*</b></label>
+          <textarea id="rvText" name="text" rows="4" maxlength="400" placeholder="{{ rv.review_placeholder }}"></textarea>
+          <small class="rv-err"></small>
+        </div>
+
+        <input type="text" name="website" class="rv-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <p class="rv-note" hidden></p>
+
+        <button type="submit" class="rv-submit">
+          {% if rv.button_icon %}<i class="{{ rv.button_icon }}"></i>{% endif %}
+          <span>{{ rv.button_text }}</span>
+        </button>
+
+        <div class="rv-success" aria-live="polite">
+          <span class="rv-check"><i class="bi bi-check-lg"></i></span>
+          <p></p>
+          <button type="button" class="rv-again">{{ rv.form_title }}</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+{% endif %}

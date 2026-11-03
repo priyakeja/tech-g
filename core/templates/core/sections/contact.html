@@ -1,0 +1,105 @@
+{% if contact.is_active %}
+<section class="ct" id="contact">
+  <svg class="ct-spark ct-spark-1" viewBox="0 0 44 44" aria-hidden="true">
+    <path d="M5 24 L17 19 M12 11 L21 18 M24 5 L26 16" stroke="#F97316" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+  </svg>
+
+  <div class="ct-stage">
+
+    <div class="ct-left">
+      <span class="ct-badge reveal">{{ contact.badge_text }}</span>
+      <h2 class="ct-title reveal d1">{{ contact.heading_normal }} <em>{{ contact.heading_highlight }}</em></h2>
+      <p class="ct-desc reveal d2">{{ contact.description }}</p>
+
+      <ul class="ct-info reveal d3">
+                {% for i in contact_info %}
+        <li class="ct-info-item">
+          {% if i.href %}
+          <a class="ct-info-row" href="{{ i.href }}"{% if i.new_tab %} target="_blank" rel="noopener"{% endif %}{% if i.gmail_url %} data-gmail="{{ i.gmail_url }}"{% endif %} title="{{ i.label }}: {{ i.value }}">
+          {% else %}
+          <div class="ct-info-row">
+          {% endif %}
+            <span class="ct-info-icon {{ i.icon_color }}"><i class="{{ i.icon_class }}"></i></span>
+            <span class="ct-info-text"><small>{{ i.label }}</small><span class="ct-info-val">{{ i.value }}</span></span>
+          {% if i.href %}</a>{% else %}</div>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% if contact.image %}
+    <div class="ct-visual reveal reveal-left d3">
+      <img src="{{ contact.image.url }}" alt="{{ contact.heading_normal }} {{ contact.heading_highlight }}">
+    </div>
+    {% endif %}
+
+    <div class="ct-card reveal reveal-right d2">
+      <svg class="ct-spark ct-spark-2" viewBox="0 0 44 44" aria-hidden="true">
+        <path d="M39 20 L27 25 M32 33 L23 26 M20 39 L18 28" stroke="#F97316" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <form class="ct-form" id="ctForm" method="post" action="{% url 'submit_enquiry' %}" data-cc="{{ contact.country_code }}" novalidate>
+        {% csrf_token %}
+        {% with first=enquiry_types.0 %}
+        <input type="hidden" name="enquiry_type" id="ctType" value="{{ first.id }}">
+
+        <span class="ct-label">{{ contact.type_label }}</span>
+        <div class="ct-tabs" role="tablist">
+          {% for t in enquiry_types %}
+          <button type="button" class="ct-tab{% if forloop.first %} active{% endif %}" role="tab" data-id="{{ t.id }}">
+            <i class="{{ t.icon_class }}"></i><span>{{ t.title }}</span>
+          </button>
+          {% endfor %}
+        </div>
+
+        <div class="ct-form-head" id="ctHead">
+          <span class="ct-form-icon"><i class="{{ first.form_icon }}"></i></span>
+          <div>
+            <h3>{{ first.form_title }}</h3>
+            <p>{{ first.form_subtitle }}</p>
+          </div>
+        </div>
+
+        <div class="ct-grid">
+          <div class="ct-field" data-field="name">
+            <label for="ctName">{{ contact.name_label }} <b>*</b></label>
+            <input id="ctName" name="name" type="text" maxlength="60" autocomplete="name" placeholder="{{ contact.name_placeholder }}">
+            <small class="ct-err"></small>
+          </div>
+
+          <div class="ct-field" data-field="phone">
+            <label for="ctPhone">{{ contact.phone_label }} <b>*</b></label>
+            <input id="ctPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="{{ contact.phone_placeholder }}">
+            <small class="ct-err"></small>
+          </div>
+
+                  <div class="ct-dyn" id="ctDyn"></div>
+
+          <div class="ct-field ct-full" data-field="message">
+            <label for="ctMsg">{{ contact.message_label }}</label>
+            <textarea id="ctMsg" name="message" maxlength="800" placeholder="{{ contact.message_placeholder }}"></textarea>
+          </div>
+        </div>
+        {% endwith %}
+
+        <input type="text" name="website" class="ct-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="ct-note" hidden></p>
+        <button type="submit" class="ct-submit">
+          {% if contact.button_icon %}<i class="{{ contact.button_icon }}"></i>{% endif %}
+          <span>{{ contact.button_text }}</span>
+        </button>
+
+        <div class="ct-success" aria-live="polite">
+          <span class="ct-check"><i class="bi bi-check-lg"></i></span>
+          <p></p>
+          <a class="ct-wa" href="#" target="_blank" rel="noopener" hidden><i class="bi bi-whatsapp"></i><span>{{ contact.whatsapp_button_text }}</span></a>
+          <button type="button" class="ct-again">{{ contact.again_text }}</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  {{ enquiry_data|json_script:"enquiryData" }}
+</section>
+{% endif %}

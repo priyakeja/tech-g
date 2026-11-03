@@ -1,0 +1,34 @@
+{% if prod_section.is_active %}
+<section class="prd" id="products">
+  <div class="prd-wrap">
+
+    <div class="prd-head reveal">
+      <span class="prd-badge">{{ prod_section.badge_text }}</span>
+      <h2>{{ prod_section.heading_normal }} <em>{{ prod_section.heading_highlight }}</em></h2>
+    </div>
+
+    <div class="prd-grid">
+      {% for p in products %}
+      <div class="prd-item reveal" style="transition-delay: {% widthratio forloop.counter0 1 70 %}ms">
+        <article class="prd-card">
+          <div class="prd-img">
+            <span class="prd-tag">{{ forloop.counter|stringformat:"02d" }} · {{ p.category }}</span>
+            {% if p.image %}
+              <img src="{{ p.image.url }}" alt="{{ p.name }}" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="prd-body">
+            <h3>{{ p.name }}</h3>
+            <p>{{ p.description }}</p>
+            <a href="{{ p.wa_url }}" target="_blank" rel="noopener" class="prd-btn">
+              {{ prod_section.button_text }} <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,51 @@
+{% if about.is_active %}
+<section class="abt" id="about">
+
+  {% if about.image %}
+    <img class="abt-bg" src="{{ about.image.url }}" alt="{{ about.heading_line1 }}">
+  {% endif %}
+
+  <div class="abt-content">
+    <span class="abt-badge reveal">{{ about.badge_text }}</span>
+
+    <h2 class="abt-title reveal">
+      <span class="l1">{{ about.heading_line1 }}</span>
+      <span class="l2"><em class="v">{{ about.heading_violet }}</em><em class="o">{{ about.heading_orange }}</em></span>
+    </h2>
+
+    <p class="abt-desc reveal">{{ about.description }}</p>
+
+    <div class="abt-cards">
+      {% for c in about_cards %}
+      <div class="abt-card-wrap reveal" style="transition-delay: {% widthratio forloop.counter0 1 130 %}ms">
+        <div class="abt-card">
+          <span class="abt-icon {{ c.icon_color }}"><i class="{{ c.icon_class }}"></i></span>
+          <h4>{{ c.title }}</h4>
+          <p>{{ c.description }}</p>
+          <a href="{{ c.link_url|default:'#' }}" class="abt-arrow {{ c.arrow_color }}" aria-label="{{ c.title }}">
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="abt-floats">
+    {% if about.show_float1 %}
+    <div class="abt-float abt-float-1">
+      <span class="abt-float-icon orange"><i class="{{ about.float1_icon }}"></i></span>
+      <div><h5>{{ about.float1_title }}</h5><small>{{ about.float1_text }}</small></div>
+    </div>
+    {% endif %}
+
+    {% if about.show_float2 %}
+    <div class="abt-float abt-float-2">
+      <span class="abt-float-icon purple"><i class="{{ about.float2_icon }}"></i></span>
+      <div><h5>{{ about.float2_title }}</h5><small>{{ about.float2_text }}</small></div>
+    </div>
+    {% endif %}
+  </div>
+
+</section>
+{% endif %}

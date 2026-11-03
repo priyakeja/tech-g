@@ -1,0 +1,37 @@
+{% if why.is_active %}
+<section class="why" id="why">
+  <div class="why-stage">
+
+    <div class="why-head">
+      <span class="why-badge reveal">{{ why.badge_text }}</span>
+      <h2 class="why-title reveal d1">
+        <span class="l">{{ why.heading_line1 }} <em>{{ why.heading_highlight }}</em></span>
+        <span class="l">{{ why.heading_line2 }}<b class="dot">{{ why.heading_dot }}</b></span>
+      </h2>
+    </div>
+
+    {% if why.image %}
+    <div class="why-visual reveal reveal-left d2">
+      <img src="{{ why.image.url }}" alt="{{ why.heading_line1 }} {{ why.heading_highlight }} {{ why.heading_line2 }}">
+    </div>
+    {% endif %}
+
+    <ul class="why-timeline reveal">
+      {% for c in why_cards %}
+      <li class="why-item reveal {{ c.icon_color }}" style="transition-delay: {% widthratio forloop.counter0 1 140 %}ms">
+        <span class="why-node"></span>
+        <a class="why-card" href="{{ c.link_url|default:'#' }}">
+          <span class="why-icon"><i class="{{ c.icon_class }}"></i></span>
+          <span class="why-text">
+            <h4>{{ c.title }}</h4>
+            <p>{{ c.description|linebreaksbr }}</p>
+          </span>
+          {% if c.arrow_icon %}<span class="why-arrow"><i class="{{ c.arrow_icon }}"></i></span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
+{% endif %}

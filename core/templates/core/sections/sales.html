@@ -1,0 +1,45 @@
+{% if sales.is_active %}
+<section class="scs" id="sales">
+  <div class="scs-stage">
+
+    <div class="scs-visual reveal reveal-left">
+      {% if sales.image %}
+        <img class="scs-img" src="{{ sales.image.url }}" alt="{{ sales.heading_line1 }} {{ sales.heading_line2 }} {{ sales.heading_highlight }}">
+      {% endif %}
+    </div>
+
+    <div class="scs-content">
+      <span class="scs-badge reveal">{{ sales.badge_text }}</span>
+
+      <h2 class="scs-title reveal d1">
+        <span class="l1">{{ sales.heading_line1 }}</span>
+        <span class="l2">{{ sales.heading_line2 }} <em>{{ sales.heading_highlight }}</em></span>
+      </h2>
+
+      <p class="scs-desc reveal d2">{{ sales.description }}</p>
+
+      <div class="scs-cards">
+        {% for c in sales_cards %}
+        <div class="scs-card-wrap reveal" style="transition-delay: {% widthratio forloop.counter 1 150 %}ms">
+          <{% if c.link_url %}a href="{{ c.link_url }}"{% else %}div{% endif %} class="scs-card {{ c.icon_color }}">
+            <span class="scs-card-icon"><i class="{{ c.icon_class }}"></i></span>
+            <span class="scs-card-text">
+              <h4>{{ c.title }}</h4>
+              <small>{{ c.subtitle }}</small>
+            </span>
+          </{% if c.link_url %}a{% else %}div{% endif %}>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if sales.button_text %}
+      <a href="{{ sales.button_url }}" class="scs-btn reveal d3">
+        {{ sales.button_text }}
+        {% if sales.button_icon %}<i class="{{ sales.button_icon }}"></i>{% endif %}
+      </a>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,41 @@
+{% if footer.is_active %}
+<footer class="ft" id="footer">
+  <span class="ft-line"></span>
+  <span class="ft-glow ft-glow-1"></span>
+  <span class="ft-glow ft-glow-2"></span>
+
+  <div class="ft-inner">
+    <div class="ft-brand reveal">
+      <a href="{% url 'index' %}" class="ft-logo">
+        {% if footer.logo_image %}
+          <img src="{{ footer.logo_image.url }}" alt="{{ footer.logo_text }}" class="ft-logo-img">
+        {% else %}
+          <span class="ft-logo-mark">{{ footer.logo_letter }}<i class="ft-logo-dot"></i></span>
+        {% endif %}
+        <span class="ft-logo-text">{{ footer.logo_text }}</span>
+      </a>
+      <p class="ft-desc">{{ footer.description }}</p>
+    </div>
+
+    <ul class="ft-links reveal">
+      {% for l in footer_links %}
+        <li style="--i:{{ forloop.counter0 }}"><a href="{{ l.url }}">{{ l.title }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <ul class="ft-contact reveal">
+      {% for c in footer_contacts %}
+        <li style="--i:{{ forloop.counter0 }}">
+          {% if c.href %}
+            <a href="{{ c.href }}"{% if c.new_tab %} target="_blank" rel="noopener"{% endif %}{% if c.gmail_url %} data-gmail="{{ c.gmail_url }}"{% endif %}>{{ c.value }}</a>
+          {% else %}
+            <span>{{ c.value }}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p class="ft-copy reveal">{{ footer.copyright }}</p>
+  </div>
+</footer>
+{% endif %}
